@@ -2,9 +2,8 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
+var hourCal = [9,10,11]
 var saveBtnEl = $('.fa-save');
-
-
 
 saveBtnEl.on('click', function(event) {
 
@@ -13,14 +12,25 @@ var btnClicked = $(event.target);
 let scheduleHour = btnClicked.parent().parent().attr('id');
 let scheduleInfo = btnClicked.parent().parent().children().eq(1).val()
 
-let scheduleEvents = {
-  student: scheduleHour.value,
-  grade: scheduleInfo.value,
-};
+console.log(scheduleHour + ' ' + scheduleInfo)
+
+localStorage.setItem(scheduleHour, JSON.stringify(scheduleInfo));
 
 });
 
 
+hourCal.forEach(function(item) {
+
+let hourSaved = $(`#hour-${item}`);
+let hourLogged = JSON.parse(localStorage.getItem(`hour-${item}`));
+
+if (!hourLogged) {
+  hourSaved.children().eq(1).val('')
+} else {
+  hourSaved.children().eq(1).val(`${hourLogged}`)
+}
+
+});
 
 
 $(function () {
